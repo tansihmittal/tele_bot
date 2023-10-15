@@ -3,8 +3,8 @@ import telebot
 from flask import Flask, request
 
 # Replace these with your Telegram bot API token and Shotcut.in API token
-TELEGRAM_BOT_API_TOKEN = "6651215580:AAEBwa8SMsYRC1eUU1HjyC15JUtTDaxiXKs"
-SHOTCUT_IN_API_TOKEN = "9a8d3ea982018e6a7a996960661775d4"
+TELEGRAM_BOT_API_TOKEN = ""
+SHOTCUT_IN_API_TOKEN = ""
 
 # Set the maximum number of links a user can shorten for free
 MAX_FREE_LINKS = 7
