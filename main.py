@@ -1,5 +1,6 @@
 import requests
 import telebot
+from flask import Flask, request
 
 # Replace these with your Telegram bot API token and Shotcut.in API token
 TELEGRAM_BOT_API_TOKEN = "6651215580:AAEBwa8SMsYRC1eUU1HjyC15JUtTDaxiXKs"
@@ -7,6 +8,9 @@ SHOTCUT_IN_API_TOKEN = "9a8d3ea982018e6a7a996960661775d4"
 
 # Set the maximum number of links a user can shorten for free
 MAX_FREE_LINKS = 7
+
+# Create a Flask app
+app = Flask(__name__)
 
 # Create a Telegram bot object
 bot = telebot.TeleBot(TELEGRAM_BOT_API_TOKEN)
@@ -38,6 +42,14 @@ def shorten_url(url):
         return short_url, None
     else:
         return None, "Failed to shorten URL"
+
+# Define a route for the Telegram webhook
+@app.route(f'/{TELEGRAM_BOT_API_TOKEN}', methods=['POST'])
+def webhook():
+    json_str = request.get_data().decode('UTF-8')
+    update = telebot.types.Update.de_json(json_str)
+    bot.process_new_updates([update])
+    return '', 200
 
 # Function to handle the /start command
 @bot.message_handler(commands=['start'])
@@ -96,5 +108,5 @@ def handle_more_links(message):
         user_states[user_id] = None
         bot.send_message(user_id, "Thank you for using the URL shortener bot. If you have more links to shorten, feel free to ask anytime! And for making QR codes, bio pages, and managing your shortened links, visit Shotcut.in")
 
-# Start the Telegram bot
-bot.polling()
+if __name__ == '__main__':
+    app.run(debug=True)
