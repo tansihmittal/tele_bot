@@ -1,10 +1,11 @@
 import requests
 import telebot
 from flask import Flask, request
+from gunicorn_config import bind, workers  # Import the Gunicorn configuration
 
 # Replace these with your Telegram bot API token and Shotcut.in API token
-TELEGRAM_BOT_API_TOKEN = ""
-SHOTCUT_IN_API_TOKEN = ""
+TELEGRAM_BOT_API_TOKEN = "YOUR_TELEGRAM_BOT_API_TOKEN"
+SHOTCUT_IN_API_TOKEN = "YOUR_SHOTCUT_IN_API_TOKEN"
 
 # Set the maximum number of links a user can shorten for free
 MAX_FREE_LINKS = 7
